@@ -1,0 +1,4 @@
+main-class = io.ivy.teampvp.TeamPVP
+name = TeamPVP
+author = cmoore
+version = 1
