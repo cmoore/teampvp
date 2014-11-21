@@ -6,28 +6,14 @@
 <properties>
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 </properties>  
-  <!--
-    <repositories>
-        <repository>
-            <id>vi-repo</id>
-            <name>Visual Illusions Repository</name>
-            <url>http://repo.visualillusionsent.net/repository/public/</url>
-        </repository>
-    </repositories>
-    -->
-  <dependencies>
-    <dependency>
-    	<groupId>org.mapdb</groupId>
-    	<artifactId>mapdb</artifactId>
-    	<version>1.0.6</version>
-	  </dependency>
-	  <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>12.0</version>
-    </dependency>
+   <dependencies>
+        <dependency>
+                <groupId>net.canarymod</groupId>
+                <artifactId>CanaryMod</artifactId>
+                <version>1.8.0-1.2.0-SNAPSHOT</version>
+        </dependency>
   </dependencies>
-  
+
   <build>
    <resources>
   	<resource>
@@ -39,37 +25,15 @@
   </resources>
   <sourceDirectory>src</sourceDirectory>
   <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-shade-plugin</artifactId>
-      <version>2.0</version>
-      <executions>
-        <execution>
-          <phase>package</phase>
-          <goals>
-            <goal>shade</goal>
-          </goals>
-          <configuration>
-            <finalName>tracker-shade</finalName>
-            <outputFile>c:\users\cmoore\Desktop\ich_bin_minecraft\vigo\plugins\${project.artifactId}.jar</outputFile>
-            <shadedArtifactAttached>false</shadedArtifactAttached>
-            <shadedClassifierName>shaded</shadedClassifierName>
-          </configuration>                      
-        </execution>
-      </executions>
-    </plugin>
-
-    <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.5</version>
         <executions><execution><phase>install</phase></execution></executions>
         <configuration>
-          <outputDirectory>../../plugins</outputDirectory>
+          <outputDirectory>../../vigo/plugins/</outputDirectory>
         </configuration>
       </plugin>
-      -->
     <plugin>
       <artifactId>maven-compiler-plugin</artifactId>
       <version>3.1</version>
