@@ -65,7 +65,6 @@ public class TeamPVPListener implements PluginListener {
         }
     }
 
-    
     @HookHandler
     public void onPlayerRespawnedHook(PlayerRespawnedHook hook) {
         Canary.log.info(hook.toString());
@@ -81,167 +80,42 @@ public class TeamPVPListener implements PluginListener {
                 switch(sig) {
                 case -1:
                     team_red.add(the_player);
-                    //the_player.executeCommand(red_title);
                     break;
                 case 0:
                     team_blue.add(the_player);
-                    //the_player.executeCommand(red_title);
                     break;
                 case 1:
                     team_blue.add(the_player);
-                    //the_player.executeCommand(blue_title);
                     break;
                 }
             }
 
-            // Are they the first in the team?
+            if (team_blue.contains(the_player)) {
+                the_player.executeCommand(blue_title);
+            }
+            
+            if (team_red.contains(the_player)) {
+                the_player.executeCommand(red_title);
+            }
+            
             reset_inventory(the_player);
         }
     }
 
     @HookHandler
     public void onBlockPlaceHook(BlockPlaceHook hook) {
-        /*
-        if (hook.getPlayer().getWorld().getFqName().equals("ctf_NORMAL")) {
-            Block the_block = hook.getBlockPlaced();
-            if (the_block.getTileEntity().equals(BlockType.CommandBlock)) {
-                Player the_player = hook.getPlayer();
-                CommandBlock cmd_block = (CommandBlock) the_block;
-            }
-            //if (team_red.contains(the_player)) {
-            //  TileEntity cmd_te = cmd_block.getTi
-        }
-        */
-    }
-    
-	
-	/*
-	Predicate<TileEntity> block_is_sign = new Predicate<TileEntity> () {
-		public boolean apply(TileEntity the_block) {
-			return the_block.getBlock().getType().equals(BlockType.SignPost);
-		}
-	};
-	
-	Predicate<Entity> entity_is_chicken = new Predicate<Entity>() {
-		public boolean apply(Entity the_entity) {
-			return the_entity.getEntityType().equals(EntityType.CHICKEN);
-		}
-	};
-	*/
-
-    /*
-    @SuppressWarnings("deprecation")
-    @HookHandler
-    public void onBlockRightClickHook(BlockRightClickHook hook) {
         Player the_player = hook.getPlayer();
-        if (hook.getBlockClicked().getType().equals(BlockType.SignPost) &&
-            hook.getPlayer().getWorld().getFqName().equals("ctf_NORMAL")) {
-            Sign sign = (Sign) hook.getBlockClicked().getTileEntity();
-            if (sign.getTextOnLine(0).equals("column") &&
-                sign.getTextOnLine(1).length() > 0) {
-                int count = Integer.parseInt(sign.getTextOnLine(1));
-                make_column(BlockType.Stone, count, sign.getBlock());
-            }
-            if (sign.getTextOnLine(0).equals("fill")) {
-                fill_hole(BlockType.Dirt, sign.getBlock());
-            }
+        Block the_block = hook.getBlockPlaced();
+
+        if (hook.getPlayer().getWorld().getFqName().equals("ctf_NORMAL")) {
+            the_player.notice(the_block.getType().getMachineName());
         }
+        
+        // TileEntity the_entity = the_block.getTileEntity();
+        // CompoundTag the_tag = the_entity.getDataTag();
+        // the_tag.set("Color","red");
+        // the_block.update();
     }
-    */
-
-
-    /* draw a rectangle
-				Block sign_block = sign.getBlock();
-				
-				List<Block> the_blocks = Arrays.asList(
-					sign_block.getRelative(-1,-1, 0),
-					sign_block.getRelative(0,-1,-1),						
-					sign_block.getRelative(1,-1, 0),
-					sign_block.getRelative(0,-1, 1),
-					sign_block.getRelative(0,-1, 0),
-					sign_block.getRelative(-1,-1,-1),
-					sign_block.getRelative(1,-1, 1),
-					sign_block.getRelative(-1,-1,1),
-					sign_block.getRelative(1,-1,-1));
-
-				the_blocks.forEach(new Consumer<Block>() {
-					@Override
-					public void accept(Block the_block) {
-						the_block.setType(BlockType.WoolBlue);
-						the_block.update();
-					}
-				});
-     */
-    
-	
-	/*
-	private void fill_hole(BlockType fill_type, Block reference) {		
-		for (int x = 0; x < 100; x++) {
-			for (int z = 0; z < 100; z++) {
-				Block nb = reference.getRelative(x, 0, z);
-				if (nb.getType().equals(BlockType.Air)) {
-					nb.setType(fill_type);
-					nb.update();
-				} else {
-					break;
-				}
-			}
-		}		
-	}
-	private void make_column(BlockType block_type, int blocks_high, Block reference) {
-		List<Block> block_list = new ArrayList();
-		for (int i = 0; i < blocks_high; i++) {
-			block_list.add(reference.getRelative(0, i, 0));
-		}
-		block_list.forEach(new Consumer<Block>() {
-			@Override
-			public void accept(Block the_block) {
-				the_block.setType(block_type);
-				the_block.update();
-			}
-		});
-	}
-	*/
-	/*
-	@HookHandler
-	public void onChunkLoadedHook(ChunkLoadedHook hook) {
-		if (hook.getWorld().getFqName().equals("ctf_NORMAL")) {
-			Collection<TileEntity> tiles = hook.getChunk().getTileEntityMap().values();
-			
-			Stream<TileEntity> all_banners = tiles.stream()
-					.filter(block -> block.getBlock().getType().equals(BlockType.StandingBanner));
-			
-			all_banners.forEach(new Consumer<TileEntity>() {
-				@Override
-				public void accept(TileEntity block) {					
-					// find the nearest sign, check its team, and
-					// mark this anvil as that team's objective.
-					
-				}
-			});
-		}
-	}
-	*/
-	
-	/*
-	@HookHandler
-	public void onPluginEnableHook(PluginEnableHook hook) {
-		Scoreboard scoreboard = Canary.scoreboards().getScoreboard();
-		
-		Team team_red = scoreboard.getTeam("Red");
-		Team team_blue = scoreboard.getTeam("Blue");
-		
-		team_red.setDisplayName("Team Red");
-		team_blue.setDisplayName("Team Blue");
-
-		team_red.setPrefix("Red");
-		team_blue.setPrefix("Blue");
-		
-		team_red = team_red;
-		team_blue = team_blue;
-	}
-	*/
-
 
     private void reset_inventory(Player the_player) {
         ItemFactory fac = Canary.factory().getItemFactory();
@@ -254,6 +128,7 @@ public class TeamPVPListener implements PluginListener {
         
         the_player.getInventory().addItem(a_sign);
         the_player.getInventory().addItem(a_sword);
+        the_player.getInventory().addItem(a_banner);
         the_player.getInventory().update();
     }
 
